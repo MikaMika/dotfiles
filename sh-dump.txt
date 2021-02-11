@@ -1,0 +1,73 @@
+#!/bin/sh
+
+### pp.sh
+wget https://... -O- |
+	hxnormalize -x |
+	hxselect img |
+	grep -Po '(?<=data-src=").*?(?=" height=)' |
+	wget -i-
+
+
+### nm-restart.sh
+#! /bin/sh
+sudo service network-manager restart
+#sudo restart ofono
+#sudo stop connman
+#sudo killall wpa_supplicant
+#sudo start connman
+
+
+### volume.sh
+amixer -q sset Master 10%-
+amixer -q sset Master 10%+
+amixer -q sset Master 100%
+amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print  }'
+
+
+### play-yt.sh
+youtube-dl ytsearch:'i am a dwarf' -f worst -o - --write-sub |
+	mpv --vo=drm - ; rm ./-.*
+
+
+### rescale.sh
+#!/bin/sh
+xrandr --output LVDS1 --mode 1024x600 --panning 1024x768 --scale 1.0x1.28
+
+
+### scale-x.sh
+#!/bin/sh
+if [ -z $1 ] ; then
+echo argument 1 is null
+exit
+fi
+if [ -z $2 ] ; then
+echo arguemnt 2 is null
+exit
+fi
+
+echo "Setting aspect ratio $1x$2"
+if xrandr | head -n1 | grep -q '1024 x 600'; then
+       xrandr --output LVDS1 --scale $1x$2
+else
+        xrandr --output LVDS1 --scale 1.0x1.0
+fi
+
+
+### scale-dialog.sh
+#!/bin/sh
+dialog --inputbox "Enter the Horizontal Scale" 10 30 "1" --title "Scale Dialog" 2>~/bin/scalex_h
+dialog --inputbox "Enter the Vertical Scale" 10 30 "1.26" 2>~/bin/scalex_v
+~/bin/scale-x.sh `cat ~/bin/scalex_h` `cat ~/bin/scalex_v`
+
+
+### webcam.sh
+mpv -vo=image /dev/video0
+
+
+### toggle-zoom.sh
+#!/bin/sh
+if xrandr | head -n1 | grep -q '1024 x 600'; then
+xrandr --output LVDS1 --scale 1.0x1.28
+else
+xrandr --output LVDS1 --scale 1.0x1.0
+fi 
