@@ -1,5 +1,11 @@
 #!/bin/sh
 
+#dwarmstrong.org
+#marvin.im
+#addy-dclxvi
+#aguslr
+# wget curl git lynx neofetch fim feh mpv neovim htop ranger ncmpcpp mpd mpc zsh i3 zathura sxiv
+
 ### pp.sh
 wget https://... -O- |
 	hxnormalize -x |
